@@ -152,6 +152,8 @@
         .overflow-x-auto {
             padding-bottom: 120px !important;
             margin-bottom: -120px !important;
+            position: relative;
+            z-index: 0;
         }
         
         /* Speciale class om inputs te verbergen tijdens foto-moment */
@@ -265,7 +267,7 @@
                     <h4 class="font-black uppercase text-xs text-slate-400 mb-4"><span class="step-indicator">1</span> Invoerlijst Medicatie</h4>
                     <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="fullSyncSecondColHeader">Voorraad</th><th class="p-4">Daggebruik</th><th class="p-4 rounded-tr-lg w-16 text-center no-print">Wis</th></tr></thead><tbody id="medBodyFull" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyFull')" class="text-sm font-bold text-[#004b87] hover:underline">+ Regel toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
                     <button onclick="calculateSync('full')" class="btn-accent">Bereken Plan</button>
                     <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
                 </div>
@@ -282,7 +284,7 @@
                     </div>
                     <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="addSyncSecondColHeader">Voorraad</th><th class="p-4">Gebruik</th><th class="p-4 rounded-tr-lg w-16 text-center no-print">Wis</th></tr></thead><tbody id="medBodyAdd" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyAdd')" class="text-sm font-bold text-[#004b87] hover:underline">+ Item toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
                     <button onclick="calculateSync('add')" class="btn-accent">Bereken Aansluiting</button>
                     <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
                 </div>
@@ -297,7 +299,7 @@
                     </div>
                     <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Datum Wijziging</th><th class="p-4 text-orange-600">OUD p/d</th><th class="p-4 text-green-700">NIEUW p/d</th><th class="p-4 text-center no-print">Wis</th></tr></thead><tbody id="medBodyDose" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyDose')" class="text-sm font-bold text-[#004b87] hover:underline">+ Wijziging</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
                     <button onclick="calculateSync('dose')" class="btn-accent">Bereken Bijlevering</button>
                     <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
                 </div>
@@ -312,7 +314,7 @@
                     </div>
                     <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Type</th><th class="p-4">Detail</th><th class="p-4 text-green-700">Gebruik</th><th class="p-4">Datum</th><th class="p-4 text-center no-print">Wis</th></tr></thead><tbody id="medBodyOntslag" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyOntslag')" class="text-sm font-bold text-green-700 hover:underline flex items-center">+ Toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print">
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
                     <button onclick="calculateSync('ontslag')" class="btn-primary px-12 py-5 shadow-lg active:scale-95 transition-all">Verwerk Ontslaglijst</button>
                     <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
                 </div>
