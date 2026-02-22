@@ -383,14 +383,13 @@
 
         async function exportAsImage() {
             const resultsDiv = document.getElementById('results');
-            if (resultsDiv.classList.contains('hidden')) {
-                showToast("⚠️ Bereken eerst het plan!"); return;
-            }
+            const hasResults = !resultsDiv.classList.contains('hidden');
+
             showToast("🔄 Afbeelding voorbereiden...");
 
             const activePanel = document.querySelector('.tab-panel:not(.hidden)');
             const allInputs = activePanel.querySelectorAll('input, select');
-            
+
             allInputs.forEach(input => {
                 const wrapper = input.closest('td') || input.closest('.input-wrap');
                 if (wrapper) {
@@ -409,28 +408,51 @@
             const resultsArea = document.getElementById('results');
             resultsArea.classList.add('printing-mode');
 
-            const captureTarget = document.getElementById('module-container');
+            // Bepaal wat we vastleggen: als resultaten zichtbaar zijn, leg alles vast; anders alleen het invoerpaneel
+            const captureTarget = hasResults
+                ? document.getElementById('module-container')
+                : activePanel.querySelector('.sap-card') || activePanel;
 
             try {
+                // Kleine vertraging zodat de browser de DOM-wijzigingen kan renderen
+                await new Promise(resolve => setTimeout(resolve, 150));
+
                 const canvas = await html2canvas(captureTarget, {
                     scale: 2,
                     useCORS: true,
+                    allowTaint: true,
                     backgroundColor: '#f5f7f9',
                     logging: false,
-                    ignoreElements: (el) => el.classList.contains('no-print') || el.classList.contains('doseer-hulp')
+                    windowWidth: document.documentElement.scrollWidth,
+                    windowHeight: document.documentElement.scrollHeight,
+                    ignoreElements: (el) => {
+                        return el.classList.contains('no-print') || el.classList.contains('doseer-hulp');
+                    }
                 });
 
-                const link = document.createElement('a');
-                link.download = 'SyncPlan_Hanzeplein.png';
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showToast("✅ Afbeelding gedownload!");
+                // Zet canvas om naar blob voor betrouwbaardere download
+                canvas.toBlob(function(blob) {
+                    if (!blob) {
+                        showToast("❌ Kon afbeelding niet aanmaken");
+                        return;
+                    }
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = 'SyncPlan_Hanzeplein.png';
+                    link.href = url;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                    showToast("✅ Afbeelding gedownload!");
+                }, 'image/png');
+
             } catch (err) {
-                console.error(err);
-                showToast("❌ Fout bij download");
+                console.error('Export fout:', err);
+                showToast("❌ Fout bij download: " + err.message);
             } finally {
                 activePanel.classList.remove('printing-mode');
                 resultsArea.classList.remove('printing-mode');
