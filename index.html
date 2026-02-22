@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synchronisatie Calculator - Service Apotheek Hanzeplein</title>
+    <title>Synchronisatie Calculator - Service Apotheek</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Bibliotheek voor het genereren van afbeeldingen -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
         
@@ -66,8 +64,8 @@
             margin-bottom: 2rem;
         }
 
-        .btn-primary { background-color: var(--sap-blue); color: white; border-radius: 999px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; tracking-widest: 0.05em; padding: 1rem 2rem; transition: all 0.2s; }
-        .btn-accent { background-color: var(--sap-orange); color: white; border-radius: 999px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; tracking-widest: 0.05em; padding: 1rem 2.5rem; transition: all 0.2s; box-shadow: 0 10px 15px -3px rgba(242, 148, 0, 0.3); }
+        .btn-primary { background-color: var(--sap-blue); color: white; border-radius: 999px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; tracking-widest: 0.05em; padding: 1rem 2rem; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-accent { background-color: var(--sap-orange); color: white; border-radius: 999px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; tracking-widest: 0.05em; padding: 1rem 2.5rem; transition: all 0.2s; box-shadow: 0 10px 15px -3px rgba(242, 148, 0, 0.3); border: none; cursor: pointer; }
         
         .btn-accent:hover { transform: scale(1.02); background-color: #d98500; }
         .btn-primary:hover { background-color: #003a6a; }
@@ -81,6 +79,7 @@
             color: var(--sap-gray);
             border-bottom: 4px solid transparent;
             transition: all 0.3s;
+            cursor: pointer;
         }
         .tab-button.tab-active {
             color: var(--sap-blue);
@@ -128,8 +127,6 @@
             min-height: 1rem;
         }
 
-        .header-logo { max-height: 65px; width: auto; }
-        
         .sticky-nav {
             position: sticky;
             top: 0;
@@ -139,39 +136,19 @@
             padding-top: 1rem;
         }
 
-        /* Container voor afbeelding export (buiten beeld) */
-        #image-export-container {
-            position: absolute;
-            left: -9999px;
-            top: 0;
-            width: 900px;
-            background: #f5f7f9;
-            padding: 40px;
-        }
-
         .overflow-x-auto {
             padding-bottom: 120px !important;
             margin-bottom: -120px !important;
-            position: relative;
-            z-index: 0;
         }
-        
-        /* Speciale class om inputs te verbergen tijdens foto-moment */
-        .printing-mode input, .printing-mode select { display: none !important; }
-        .print-text { display: none; }
-        .printing-mode .print-text { display: inline !important; font-weight: bold; color: var(--sap-blue); }
     </style>
 </head>
 <body class="pb-20">
 
     <!-- Header -->
-    <header class="sap-header mb-8 shadow-sm no-print" id="main-header">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
-            <div class="flex items-center mb-4 md:mb-0 cursor-pointer transition-opacity hover:opacity-80" onclick="switchTab('home')">
-                <img src="image_20e441.png" alt="Logo Service Apotheek Hanzeplein" class="header-logo" crossorigin="anonymous" onerror="this.style.display='none'">
-            </div>
-            <div class="text-center md:text-right">
-                <h1 class="text-lg md:text-2xl font-black text-slate-800 uppercase italic tracking-tight">Sync-App <span class="text-[#004b87]">Pro</span></h1>
+    <header class="sap-header mb-8 shadow-sm" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex justify-center items-center">
+            <div class="text-center cursor-pointer" onclick="switchTab('home')">
+                <h1 class="text-xl md:text-3xl font-black text-slate-800 uppercase italic tracking-tight">Synchronisatie <span class="text-[#004b87]">Calculator</span></h1>
             </div>
         </div>
     </header>
@@ -181,56 +158,49 @@
         <!-- DASHBOARD -->
         <div id="panel-home" class="tab-panel animate-in fade-in duration-500">
             <div class="max-w-3xl mx-auto text-center mb-16">
-                <h2 class="text-4xl font-black text-[#004b87] uppercase mb-4 tracking-tighter">Bereken de ideale synchronisatie</h2>
-                <p class="text-slate-500 text-lg">Kies de gewenste module om te starten.</p>
+                <h2 class="text-3xl font-black text-[#004b87] uppercase mb-4 tracking-tighter">Wat wilt u berekenen?</h2>
+                <p class="text-slate-500 text-lg">Kies een module om voorraadverschillen tussen medicatie op te lossen.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <!-- Card 1: Volledige Sync -->
                 <button onclick="switchTab('full')" class="sap-card dashboard-card p-10 text-center flex flex-col items-center group">
                     <div class="w-20 h-20 bg-blue-50 text-[#004b87] rounded-3xl flex items-center justify-center mb-8 group-hover:bg-[#004b87] group-hover:text-white transition-all duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 5v14M4 9h11m-11 3h15m-11 3h10" /></svg>
                     </div>
                     <h3 class="text-xl font-black text-slate-800 uppercase mb-4">Volledige Sync</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">Breng een hele lijst medicijnen in één keer in hetzelfde ritme.</p>
+                    <p class="text-sm text-slate-500 leading-relaxed">Breng alle medicatie in één keer in hetzelfde herhaalritme.</p>
                 </button>
 
-                <!-- Card 2 -->
                 <button onclick="switchTab('add')" class="sap-card dashboard-card p-10 text-center flex flex-col items-center group">
                     <div class="w-20 h-20 bg-blue-50 text-[#004b87] rounded-3xl flex items-center justify-center mb-8 group-hover:bg-[#004b87] group-hover:text-white transition-all duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h3 class="text-xl font-black text-slate-800 uppercase mb-4">Nieuw Item</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">Sluit een nieuw medicijn aan op een lopende herhaalservice.</p>
+                    <p class="text-sm text-slate-500 leading-relaxed">Sluit één nieuw medicijn aan op een lopende service.</p>
                 </button>
 
-                <!-- Card 3 -->
                 <button onclick="switchTab('dose')" class="sap-card dashboard-card p-10 text-center flex flex-col items-center group">
                     <div class="w-20 h-20 bg-orange-50 text-[#f29400] rounded-3xl flex items-center justify-center mb-8 group-hover:bg-[#f29400] group-hover:text-white transition-all duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     </div>
                     <h3 class="text-xl font-black text-slate-800 uppercase mb-4">Wijzig Dosis</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">Bereken bijlevering na een verandering in het schema.</p>
+                    <p class="text-sm text-slate-500 leading-relaxed">Bereken extra tabletten na een doseringsverandering.</p>
                 </button>
 
-                <!-- Card 4 -->
                 <button onclick="switchTab('ontslag')" class="sap-card dashboard-card p-10 text-center flex flex-col items-center group">
                     <div class="w-20 h-20 bg-green-50 text-green-700 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-green-700 group-hover:text-white transition-all duration-300">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
                     <h3 class="text-xl font-black text-slate-800 uppercase mb-4">Ontslaglijst</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">Verwerk een lijst met ziekenhuiswijzigingen tegelijk.</p>
+                    <p class="text-sm text-slate-500 leading-relaxed">Verwerk ziekenhuismutaties (starten/stoppen/wijzigen).</p>
                 </button>
             </div>
         </div>
 
         <!-- Sub-Navigatie -->
-        <div id="sub-nav" class="hidden sticky-nav mb-8 no-print">
+        <div id="sub-nav" class="hidden sticky-nav mb-8">
             <div class="flex flex-wrap bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-                <button onclick="switchTab('home')" class="tab-button flex-1 bg-slate-50 border-r border-slate-100 hover:bg-slate-200 transition-colors">
-                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 0 001 1m-6 0h6"></path></svg>
-                    Home
-                </button>
+                <button onclick="switchTab('home')" class="tab-button flex-1 bg-slate-50 border-r border-slate-100 hover:bg-slate-200 transition-colors">Home</button>
                 <button onclick="switchTab('full')" id="tab-full" class="tab-button flex-[2]">Sync</button>
                 <button onclick="switchTab('add')" id="tab-add" class="tab-button flex-[2]">Nieuw Item</button>
                 <button onclick="switchTab('dose')" id="tab-dose" class="tab-button flex-[2]">Wijziging</button>
@@ -243,88 +213,68 @@
             
             <!-- PANEL 1: VOLLEDIGE SYNC -->
             <div id="panel-full" class="tab-panel hidden">
-                <div class="sap-card p-8 mb-8" id="input-card-full">
+                <div class="sap-card p-8 mb-8">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 items-end">
-                        <div class="input-wrap">
+                        <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Invoermethode</label>
                             <select id="inputModeFull" onchange="updateFullSyncTableHeaders()" class="w-full bg-slate-50 font-semibold text-slate-700">
-                                <option value="stock">Hoeveelheid tabletten</option>
-                                <option value="date">Specifieke einddatum</option>
+                                <option value="stock">Op basis van voorraad</option>
+                                <option value="date">Op basis van einddatum</option>
                             </select>
-                            <span class="print-text"></span>
                         </div>
-                        <div class="input-wrap">
-                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Teldatum</label>
-                            <input type="date" id="countingDateFull" class="w-full bg-slate-50 font-semibold">
-                            <span class="print-text"></span>
-                        </div>
-                        <div class="input-wrap">
-                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Service Cyclus</label>
-                            <select id="repeatPeriodFull" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="30">30 dagen</option><option value="60">60 dagen</option><option value="90" selected>90 dagen</option><option value="180">180 dagen</option></select>
-                            <span class="print-text"></span>
-                        </div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Teldatum</label><input type="date" id="countingDateFull" class="w-full bg-slate-50 font-semibold text-slate-700"></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Service Cyclus</label><select id="repeatPeriodFull" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="30">30 dagen</option><option value="60">60 dagen</option><option value="90" selected>90 dagen</option><option value="180">180 dagen</option></select></div>
                     </div>
                     <h4 class="font-black uppercase text-xs text-slate-400 mb-4"><span class="step-indicator">1</span> Invoerlijst Medicatie</h4>
-                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="fullSyncSecondColHeader">Voorraad</th><th class="p-4">Daggebruik</th><th class="p-4 rounded-tr-lg w-16 text-center no-print">Wis</th></tr></thead><tbody id="medBodyFull" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyFull')" class="text-sm font-bold text-[#004b87] hover:underline">+ Regel toevoegen</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="fullSyncSecondColHeader">Voorraad</th><th class="p-4">Daggebruik</th><th class="p-4 rounded-tr-lg w-16 text-center">Wis</th></tr></thead><tbody id="medBodyFull" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100"><button onclick="addRow('medBodyFull')" class="text-sm font-bold text-[#004b87] hover:underline">+ Regel toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
-                    <button onclick="calculateSync('full')" class="btn-accent">Bereken Plan</button>
-                    <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
-                </div>
+                <div class="flex justify-center mb-16"><button onclick="calculateSync('full')" class="btn-accent">Bereken Plan</button></div>
             </div>
 
             <!-- PANEL 2: NIEUW IN SERVICE -->
             <div id="panel-add" class="tab-panel hidden">
-                <div class="sap-card p-8 mb-8" id="input-card-add">
+                <div class="sap-card p-8 mb-8">
                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-10 items-end">
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Methode</label><select id="inputModeAdd" onchange="updateAddSyncTableHeaders()" class="w-full bg-slate-50"><option value="stock">Voorraad</option><option value="date">Einddatum</option></select><span class="print-text"></span></div>
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Teldatum</label><input type="date" id="countingDateAdd" class="w-full bg-slate-50"><span class="print-text"></span></div>
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Volgende Sync</label><input type="date" id="targetSyncDateAdd" class="w-full bg-slate-50"><span class="print-text"></span></div>
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Cyclus</label><select id="repeatPeriodAdd" class="w-full bg-slate-50"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select><span class="print-text"></span></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Invoermethode</label><select id="inputModeAdd" onchange="updateAddSyncTableHeaders()" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="stock">Voorraad</option><option value="date">Einddatum</option></select></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Teldatum</label><input type="date" id="countingDateAdd" class="w-full bg-slate-50 font-semibold text-slate-700"></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Volgende Sync</label><input type="date" id="targetSyncDateAdd" class="w-full bg-slate-50 font-semibold text-slate-700"></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Cyclus</label><select id="repeatPeriodAdd" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select></div>
                     </div>
-                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="addSyncSecondColHeader">Voorraad</th><th class="p-4">Gebruik</th><th class="p-4 rounded-tr-lg w-16 text-center no-print">Wis</th></tr></thead><tbody id="medBodyAdd" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyAdd')" class="text-sm font-bold text-[#004b87] hover:underline">+ Item toevoegen</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4" id="addSyncSecondColHeader">Voorraad</th><th class="p-4">Gebruik</th><th class="p-4 rounded-tr-lg w-16 text-center">Wis</th></tr></thead><tbody id="medBodyAdd" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100"><button onclick="addRow('medBodyAdd')" class="text-sm font-bold text-[#004b87] hover:underline">+ Item toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
-                    <button onclick="calculateSync('add')" class="btn-accent">Bereken Aansluiting</button>
-                    <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
-                </div>
+                <div class="flex justify-center mb-16"><button onclick="calculateSync('add')" class="btn-accent">Bereken Aansluiting</button></div>
             </div>
 
             <!-- PANEL 3: DOSERING WIJZIGEN -->
             <div id="panel-dose" class="tab-panel hidden">
-                <div class="sap-card p-8 mb-8 border-orange-200" id="input-card-dose">
+                <div class="sap-card p-8 mb-8 border-orange-200">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 items-end">
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Sync-datum</label><input type="date" id="targetSyncDateDose" class="w-full bg-slate-50"><span class="print-text"></span></div>
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Cyclus</label><select id="repeatPeriodDose" class="w-full bg-slate-50"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select><span class="print-text"></span></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Gezamenlijke herhaaldatum</label><input type="date" id="targetSyncDateDose" class="w-full bg-slate-50 font-semibold text-slate-700"></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Cyclus</label><select id="repeatPeriodDose" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select></div>
                     </div>
-                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Datum Wijziging</th><th class="p-4 text-orange-600">OUD p/d</th><th class="p-4 text-green-700">NIEUW p/d</th><th class="p-4 text-center no-print">Wis</th></tr></thead><tbody id="medBodyDose" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyDose')" class="text-sm font-bold text-[#004b87] hover:underline">+ Wijziging</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Datum Wijziging</th><th class="p-4 text-orange-600">OUD p/d</th><th class="p-4 text-green-700">NIEUW p/d</th><th class="p-4 text-center">Wis</th></tr></thead><tbody id="medBodyDose" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100"><button onclick="addRow('medBodyDose')" class="text-sm font-bold text-[#004b87] hover:underline">+ Wijziging</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
-                    <button onclick="calculateSync('dose')" class="btn-accent">Bereken Bijlevering</button>
-                    <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
-                </div>
+                <div class="flex justify-center mb-16"><button onclick="calculateSync('dose')" class="btn-accent">Bereken Bijlevering</button></div>
             </div>
 
             <!-- PANEL 4: ONTSLAGLIJST -->
             <div id="panel-ontslag" class="tab-panel hidden">
-                <div class="sap-card p-8 mb-8 border-green-200" id="input-card-ontslag">
+                <div class="sap-card p-8 mb-8 border-green-200">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 items-end">
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Sync Moment Service</label><input type="date" id="targetSyncDateOntslag" class="w-full bg-slate-50"><span class="print-text"></span></div>
-                        <div class="input-wrap"><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Cyclus</label><select id="repeatPeriodOntslag" class="w-full bg-slate-50"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select><span class="print-text"></span></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Eerstvolgende Sync-datum</label><input type="date" id="targetSyncDateOntslag" class="w-full bg-slate-50 font-semibold text-slate-700"></div>
+                        <div><label class="block text-[10px] font-black text-slate-400 uppercase mb-2">Nieuwe cyclus</label><select id="repeatPeriodOntslag" class="w-full bg-slate-50 font-semibold text-slate-700"><option value="30">30</option><option value="60">60</option><option value="90" selected>90</option><option value="180">180</option></select></div>
                     </div>
-                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Type</th><th class="p-4">Detail</th><th class="p-4 text-green-700">Gebruik</th><th class="p-4">Datum</th><th class="p-4 text-center no-print">Wis</th></tr></thead><tbody id="medBodyOntslag" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100 no-print"><button onclick="addRow('medBodyOntslag')" class="text-sm font-bold text-green-700 hover:underline flex items-center">+ Toevoegen</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="sap-table-header"><th class="p-4 rounded-tl-lg">Medicijn</th><th class="p-4">Type</th><th class="p-4">Detail</th><th class="p-4 text-green-700">Gebruik</th><th class="p-4">Datum</th><th class="p-4 text-center">Wis</th></tr></thead><tbody id="medBodyOntslag" class="divide-y divide-slate-100"></tbody></table><div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-100"><button onclick="addRow('medBodyOntslag')" class="text-sm font-bold text-green-700 hover:underline flex items-center">+ Toevoegen</button></div></div>
                 </div>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 no-print" style="position:relative;z-index:10;">
-                    <button onclick="calculateSync('ontslag')" class="btn-primary px-12 py-5 shadow-lg active:scale-95 transition-all">Verwerk Ontslaglijst</button>
-                    <button onclick="exportAsImage()" class="btn-primary">Download Afbeelding (PNG)</button>
-                </div>
+                <div class="flex justify-center mb-16"><button onclick="calculateSync('ontslag')" class="btn-primary px-12 py-5 shadow-lg active:scale-95 transition-all">Verwerk Ontslaglijst</button></div>
             </div>
 
             <!-- RESULTATEN -->
             <div id="results" class="hidden space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
                 <div id="captureArea" class="space-y-6">
+                    <!-- Stap 2: Actieplan -->
                     <div class="sap-card p-10 border-t-8 border-[#f29400]">
-                        <div class="mb-8"><h3 class="text-2xl font-black text-slate-800 uppercase mb-2"><span class="step-indicator">2</span> Actieplan (Vandaag)</h3><p class="text-sm text-slate-500 italic" id="actionDescription"></p></div>
+                        <div class="mb-8"><h3 class="text-2xl font-black text-slate-800 uppercase mb-2"><span class="step-indicator">2</span> Actieplan (Directe bijlevering)</h3><p class="text-sm text-slate-500 italic" id="actionDescription"></p></div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
                                 <thead><tr class="text-[11px] font-black text-slate-400 border-b pb-3 uppercase tracking-wider"><th class="pb-3">Medicijn</th><th class="pb-3">Gebruik</th><th class="pb-3 text-center">Voorraad Op</th><th class="pb-3 text-right">Nu leveren</th><th class="pb-3 text-center">Tot Datum</th><th class="pb-3 text-right">Status</th></tr></thead>
@@ -332,8 +282,9 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Stap 3: Herhaalritme -->
                     <div class="sap-card p-10 border-t-8 border-[#004b87]">
-                        <div class="mb-8"><h3 class="text-2xl font-black text-slate-800 uppercase"><span class="step-indicator">3</span> Herhaalritme</h3></div>
+                        <div class="mb-8"><h3 class="text-2xl font-black text-slate-800 uppercase"><span class="step-indicator">3</span> Toekomstig herhaalritme (AIS)</h3></div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                             <div class="bg-[#eef4f9] p-6 rounded-2xl text-[#004b87] border border-[#d1d9e0]"><span class="block text-[11px] font-black uppercase mb-2 tracking-widest opacity-60">Sync Moment</span><span id="syncDateDisplay" class="text-2xl font-black italic">...</span></div>
                             <div class="bg-[#eef4f9] p-6 rounded-2xl text-[#004b87] border border-[#d1d9e0]"><span class="block text-[11px] font-black uppercase mb-2 tracking-widest opacity-60">Cyclus</span><span id="periodDisplay" class="text-xl font-black italic">...</span></div>
@@ -346,21 +297,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="sap-card p-10 bg-[#1e2936] text-white no-print">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="font-black uppercase tracking-widest text-xs opacity-70">Apotheek Instructie</h3>
-                        <button onclick="copyToClipboard()" class="text-[11px] bg-[#004b87] text-white px-5 py-2 rounded-xl font-bold uppercase">Kopieer</button>
-                    </div>
-                    <pre id="apotheekOutput" class="text-xs md:text-sm whitespace-pre-wrap font-mono text-green-400 leading-relaxed"></pre>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Container voor export -->
-    <div id="image-export-container"></div>
-
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1e2936] text-white px-10 py-5 rounded-2xl shadow-2xl hidden z-50 font-black text-xs uppercase border border-slate-700">Bericht gekopieerd!</div>
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1e2936] text-white px-10 py-5 rounded-2xl shadow-2xl hidden z-50 font-black text-xs uppercase border border-slate-700 tracking-widest">Melding...</div>
 
     <script>
         let currentActiveTab = 'home';
@@ -381,80 +322,6 @@
             }
             document.getElementById('results').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        async function exportAsImage() {
-            showToast("🔄 Afbeelding voorbereiden...");
-
-            const activePanel = document.querySelector('.tab-panel:not(.hidden)');
-            const resultsArea = document.getElementById('results');
-
-            // Vul print-text spans met huidige waardes
-            activePanel.querySelectorAll('input, select').forEach(input => {
-                const wrapper = input.closest('td') || input.closest('.input-wrap');
-                if (wrapper) {
-                    const printSpan = wrapper.querySelector('.print-text');
-                    if (printSpan) {
-                        printSpan.innerText = input.tagName === 'SELECT'
-                            ? input.options[input.selectedIndex].text
-                            : (input.value || '-');
-                    }
-                }
-            });
-
-            activePanel.classList.add('printing-mode');
-            resultsArea.classList.add('printing-mode');
-
-            await new Promise(resolve => setTimeout(resolve, 200));
-
-            try {
-                const captureTarget = document.getElementById('module-container');
-
-                const canvas = await html2canvas(captureTarget, {
-                    scale: 2,
-                    useCORS: true,
-                    allowTaint: true,
-                    backgroundColor: '#f5f7f9',
-                    logging: false,
-                    ignoreElements: (el) => el.classList.contains('no-print') || el.classList.contains('doseer-hulp')
-                });
-
-                // Probeer eerst toBlob, val terug op toDataURL
-                try {
-                    canvas.toBlob(function(blob) {
-                        if (blob) {
-                            const url = URL.createObjectURL(blob);
-                            triggerDownload(url, 'SyncPlan_Hanzeplein.png');
-                            setTimeout(() => URL.revokeObjectURL(url), 1000);
-                        } else {
-                            // Blob is null (tainted canvas) — gebruik toDataURL als fallback
-                            triggerDownload(canvas.toDataURL('image/png'), 'SyncPlan_Hanzeplein.png');
-                        }
-                        showToast("✅ Afbeelding gedownload!");
-                    }, 'image/png');
-                } catch(e) {
-                    // toBlob threw — gebruik toDataURL direct
-                    triggerDownload(canvas.toDataURL('image/png'), 'SyncPlan_Hanzeplein.png');
-                    showToast("✅ Afbeelding gedownload!");
-                }
-
-            } catch (err) {
-                console.error('Export fout:', err);
-                showToast("❌ Fout: " + err.message);
-            } finally {
-                activePanel.classList.remove('printing-mode');
-                resultsArea.classList.remove('printing-mode');
-            }
-        }
-
-        function triggerDownload(href, filename) {
-            const link = document.createElement('a');
-            link.href = href;
-            link.download = filename;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
 
         function updateFullSyncTableHeaders() {
@@ -497,27 +364,27 @@
             const isDoseTab = (containerId === 'medBodyDose');
             const tr = document.createElement('tr');
             tr.className = "group hover:bg-slate-50 transition-colors relative";
-            let rowHTML = `<td class="p-4"><input type="text" placeholder="Naam..." class="med-name w-full bg-transparent font-bold text-[#004b87] border-b-2 border-transparent focus:border-[#004b87] p-1"><span class="print-text"></span></td>`;
+            let rowHTML = `<td class="p-4"><input type="text" placeholder="Naam..." class="med-name w-full bg-transparent font-bold text-[#004b87] border-b-2 border-transparent focus:border-[#004b87] p-1"></td>`;
             
             if (containerId === 'medBodyFull' || containerId === 'medBodyAdd') {
                 const modeId = containerId === 'medBodyFull' ? 'inputModeFull' : 'inputModeAdd';
                 const modeEl = document.getElementById(modeId);
                 const m = modeEl ? modeEl.value : 'stock';
-                rowHTML += `<td class="p-4"><input type="${m==='date'?'date':'number'}" oninput="updateLiveHint(this)" class="med-stock w-full"><span class="live-hint"></span><span class="print-text"></span></td>`;
+                rowHTML += `<td class="p-4"><input type="${m==='date'?'date':'number'}" oninput="updateLiveHint(this)" class="med-stock w-full"><span class="live-hint"></span></td>`;
             } else if (containerId === 'medBodyOntslag') {
-                rowHTML += `<td class="p-4"><select onchange="updateOntslagRow(this)" class="med-type w-full text-[10px] font-bold uppercase bg-white"><option value="nieuw">Nieuw</option><option value="wijziging">Wijzig</option><option value="stop">Stop</option></select><span class="print-text"></span></td><td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" step="0.001" placeholder="Detail" class="med-detail w-full text-sm"><button onclick="toggleDoseHulp(this)" class="p-2 text-orange-500 hover:bg-orange-50 rounded btn-hulp-detail hidden no-print"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div><span class="print-text"></span></td>`;
+                rowHTML += `<td class="p-4"><select onchange="updateOntslagRow(this)" class="med-type w-full text-[10px] font-bold uppercase bg-white"><option value="nieuw">Nieuw</option><option value="wijziging">Wijzig</option><option value="stop">Stop</option></select></td><td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" step="0.001" placeholder="Voorraad" class="med-detail w-full text-sm"><button onclick="toggleDoseHulp(this)" class="p-2 text-orange-500 hover:bg-orange-50 rounded btn-hulp-detail hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div></td>`;
             } else if (isDoseTab) {
-                rowHTML += `<td class="p-4"><input type="date" class="med-change-date w-full"><span class="print-text"></span></td><td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" step="0.001" placeholder="OUD" class="med-usage-old w-full"><button onclick="toggleDoseHulp(this)" class="p-2 text-orange-500 hover:bg-orange-50 rounded no-print"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div><span class="print-text"></span></td>`;
-            } else { rowHTML += `<td class="p-4"><input type="number" class="med-stock w-full"><span class="print-text"></span></td>`; }
+                rowHTML += `<td class="p-4"><input type="date" class="med-change-date w-full"></td><td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" step="0.001" placeholder="OUD" class="med-usage-old w-full"><button onclick="toggleDoseHulp(this)" class="p-2 text-orange-500 hover:bg-orange-50 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div></td>`;
+            } else { rowHTML += `<td class="p-4"><input type="number" class="med-stock w-full"></td>`; }
 
-            rowHTML += `<td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" min="0" step="0.001" placeholder="p/d" oninput="updateLiveHint(this)" class="med-usage w-full"> <button onclick="toggleDoseHulp(this)" class="p-2 text-indigo-500 hover:bg-indigo-50 rounded no-print"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div><span class="print-text"></span></td>`;
-            if (containerId === 'medBodyOntslag') rowHTML += `<td class="p-4"><input type="date" class="med-date-main w-full"><span class="print-text"></span></td>`;
-            rowHTML += `<td class="p-4 text-center no-print"><button onclick="this.parentElement.parentElement.remove()" class="text-slate-200 hover:text-red-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></td>`;
+            rowHTML += `<td class="p-4 relative"><div class="flex items-center gap-1"><input type="number" min="0" step="0.001" placeholder="p/d" oninput="updateLiveHint(this)" class="med-usage w-full"> <button onclick="toggleDoseHulp(this)" class="p-2 text-indigo-500 hover:bg-indigo-50 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></button></div><div class="doseer-hulp">${getHulpHTML()}</div></td>`;
+            if (containerId === 'medBodyOntslag') rowHTML += `<td class="p-4"><input type="date" class="med-date-main w-full"></td>`;
+            rowHTML += `<td class="p-4 text-center"><button onclick="this.parentElement.parentElement.remove()" class="text-slate-200 hover:text-red-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></td>`;
             tr.innerHTML = rowHTML; tbody.appendChild(tr);
             const dIn = tr.querySelector('input[type="date"]'); if(dIn) dIn.valueAsDate = new Date();
         }
 
-        function getHulpHTML() { return `<div class="space-y-4 text-left"><div class="flex justify-between items-center"><span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Doseerhulp</span><button onclick="this.closest('.doseer-hulp').classList.remove('active')" class="text-slate-300 hover:text-red-500 text-lg">&times;</button></div><div><label class="text-[9px] font-black text-slate-500 block uppercase mb-1">Tabletten</label><input type="number" class="hulp-aantal w-full p-2 text-sm border-slate-200" value="1"></div><div><label class="text-[9px] font-black text-slate-500 block uppercase mb-1">Periode</label><select onchange="handlePeriodeChange(this)" class="hulp-periode w-full p-2 text-sm border-slate-200"><option value="1">Dag</option><option value="7" selected>Week</option><option value="14">2 weken</option><option value="30">Maand</option><option value="custom">Ander...</option></select></div><div class="custom-dagen-container hidden"><input type="number" class="hulp-custom-dagen w-full p-2 text-sm border-slate-200" placeholder="Aantal dagen"></div><button onclick="applyDoseHulp(this)" class="w-full bg-[#004b87] text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-widest mt-2 active:scale-95 shadow-lg">Toepassen</button></div>`; }
+        function getHulpHTML() { return `<div class="space-y-4 text-left"><div class="flex justify-between items-center"><span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Doseerhulp</span><button onclick="this.closest('.doseer-hulp').classList.remove('active')" class="text-slate-300 hover:text-red-500 text-lg">&times;</button></div><div><label class="text-[9px] font-black text-slate-500 block uppercase mb-1">Aantal tabletten</label><input type="number" class="hulp-aantal w-full p-2 text-sm border-slate-200" value="1"></div><div><label class="text-[9px] font-black text-slate-500 block uppercase mb-1">Periode</label><select onchange="handlePeriodeChange(this)" class="hulp-periode w-full p-2 text-sm border-slate-200"><option value="1">Dag</option><option value="7" selected>Week</option><option value="14">2 weken</option><option value="30">Maand</option><option value="custom">Ander...</option></select></div><div class="custom-dagen-container hidden"><input type="number" class="hulp-custom-dagen w-full p-2 text-sm border-slate-200" placeholder="Aantal dagen"></div><button onclick="applyDoseHulp(this)" class="w-full bg-[#004b87] text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-widest mt-2 active:scale-95 shadow-lg">Toepassen</button></div>`; }
         function updateOntslagRow(s) { const r = s.parentElement.parentElement; const det = r.querySelector('.med-detail'); const use = r.querySelector('.med-usage'); const btn = r.querySelector('.btn-hulp-detail'); if (s.value === 'stop') { det.disabled = true; use.disabled = true; det.placeholder = "---"; use.placeholder = "STOP"; if(btn) btn.classList.add('hidden'); } else if (s.value === 'wijziging') { det.disabled = false; use.disabled = false; det.placeholder = "OUD p/d"; if(btn) btn.classList.remove('hidden'); } else { det.disabled = false; use.disabled = false; det.placeholder = "Voorraad"; if(btn) btn.classList.add('hidden'); } }
         
         function toggleDoseHulp(b) { 
@@ -539,7 +406,7 @@
             const rows = document.querySelectorAll(`#${prefix} tr`);
             const anchorInput = document.getElementById(`targetSyncDate${type.charAt(0).toUpperCase() + type.slice(1)}`);
             const repeatPeriod = parseInt(document.getElementById(`repeatPeriod${type.charAt(0).toUpperCase() + type.slice(1)}`).value);
-            let meds = []; let fAnchor = anchorDate = anchorInput && anchorInput.value ? new Date(anchorInput.value) : null;
+            let meds = []; let fAnchor = anchorInput && anchorInput.value ? new Date(anchorInput.value) : null;
             if (type === 'full') { const c = document.getElementById('countingDateFull').value; if (!c) return showToast("⚠️ Kies teldatum"); fAnchor = new Date(c); }
             else if (!fAnchor) return showToast("⚠️ Kies herhaalmoment");
             
@@ -574,11 +441,11 @@
             document.getElementById('syncDateDisplay').innerText = anchorDate.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
             document.getElementById('periodDisplay').innerText = `Elke ${repeatPeriod} dagen`;
             document.getElementById('actionDescription').innerText = "De stappen om alle voorraden gelijk te trekken.";
-            let txt = `SYNC RAPPORT - SERVICE APOTHEEK HANZEPLEIN\n----------------------------------------------\nAnkerdatum: ${anchorDate.toLocaleDateString('nl-NL')}\n\n`;
+            
             meds.forEach(med => {
                 if (med.type === 'stop') {
                     ab.innerHTML += `<tr class="text-xs"><td>${med.name}</td><td class="font-bold text-red-600 uppercase">STOP</td><td class="text-center">-</td><td class="text-right">0</td><td class="text-center">${med.stopDate.toLocaleDateString('nl-NL')}</td><td class="text-right"><span class="status-pill bg-red-100 text-red-600">STOP</span></td></tr>`;
-                    txt += `${med.name.toUpperCase()}: STOP per ${med.stopDate.toLocaleDateString('nl-NL')}\n`; return;
+                    return;
                 }
                 let next = new Date(anchorDate);
                 if (type === 'full') { const cycles = Math.floor(Math.ceil((anchorDate - med.endDate)/86400000)/repeatPeriod); next.setDate(anchorDate.getDate() - (cycles * repeatPeriod)); }
@@ -586,11 +453,10 @@
                 const gap = Math.ceil((next - med.endDate)/86400000); const del = Math.max(0, Math.ceil(gap * med.usage)); const ref = Math.ceil(repeatPeriod * med.usage);
                 const sd = gap > 0 ? new Date(new Date(next).setDate(next.getDate()-1)).toLocaleDateString('nl-NL') : "-";
                 const ut = formatUsage(med.usage);
-                ab.innerHTML += `<tr class="text-[11px]"><td class="py-4 font-black uppercase text-slate-800">${med.name}</td><td class="text-slate-500 font-bold italic">${ut}${med.oldUsage?'<br>(Oud: '+med.oldUsage+')':''}</td><td class="text-center text-slate-500 font-bold">${med.endDate.toLocaleDateString('nl-NL')}</td><td class="text-right font-black ${del>0?'text-[#f29400]':'text-slate-300'}">${del} st.</td><td class="text-center font-bold text-slate-600">${sd}</td><td class="text-right"><span class="status-pill ${del>0?'bg-orange-100 text-[#f29400]':'bg-green-100 text-green-600'}">${del>0?'Sync':'OK'}</span></td></tr>`;
+                ab.innerHTML += `<tr class="text-[11px]"><td class="py-4 font-black uppercase text-slate-800">${med.name}</td><td class="text-slate-500 font-bold italic">${ut}${med.oldUsage?'<br>(Oud: '+med.oldUsage+')':''}</td><td class="text-center text-slate-500 font-bold">${med.endDate.toLocaleDateString('nl-NL')}</td><td class="text-right font-black ${del>0?'text-[#f29400]':'text-slate-300'}">${del} st.</td><td class="text-center">${sd}</td><td class="text-right"><span class="status-pill ${del>0?'bg-orange-100 text-[#f29400]':'bg-green-100 text-green-600'}">${del>0?'Sync':'OK'}</span></td></tr>`;
                 fb.innerHTML += `<tr class="text-[11px]"><td class="py-4 font-black uppercase text-slate-800">${med.name}</td><td class="font-bold text-slate-500">${ut}</td><td class="text-center font-black text-[#004b87]">${next.toLocaleDateString('nl-NL')}</td><td class="text-right font-black text-[#004b87] text-lg">${ref} st.</td></tr>`;
-                txt += `${med.name.toUpperCase()}\n- Op: ${med.endDate.toLocaleDateString('nl-NL')}\n- Nu: ${del} st\n- AIS: ${ref} per ${repeatPeriod}d\n----------------------------------------------\n`;
             });
-            document.getElementById('apotheekOutput').innerText = txt; document.getElementById('results').classList.remove('hidden');
+            document.getElementById('results').classList.remove('hidden');
             window.scrollTo({ top: document.getElementById('results').offsetTop - 40, behavior: 'smooth' });
         }
 
@@ -604,7 +470,7 @@
             document.getElementById('results').classList.add('hidden'); 
             switchTab('home'); 
         }
-        function copyToClipboard() { navigator.clipboard.writeText(document.getElementById('apotheekOutput').innerText).then(() => showToast("✅ Gekopieerd!")); }
+
         function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.classList.remove('hidden'); setTimeout(() => t.classList.add('hidden'), 3000); }
     </script>
 </body>
