@@ -6,7 +6,7 @@
     <title>Synchronisatie Calculator - Service Apotheek Hanzeplein</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Bibliotheek voor het genereren van afbeeldingen -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
         
@@ -165,10 +165,10 @@
 <body class="pb-20">
 
     <!-- Header -->
-    <header class="sap-header mb-8 shadow-sm" id="main-header">
+    <header class="sap-header mb-8 shadow-sm no-print" id="main-header">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
             <div class="flex items-center mb-4 md:mb-0 cursor-pointer transition-opacity hover:opacity-80" onclick="switchTab('home')">
-                <img src="image_20e441.png" alt="Logo Service Apotheek Hanzeplein" class="header-logo" onerror="this.src='https://via.placeholder.com/250x70?text=Service+Apotheek+Hanzeplein'">
+                <img src="image_20e441.png" alt="Logo Service Apotheek Hanzeplein" class="header-logo" crossorigin="anonymous" onerror="this.style.display='none'">
             </div>
             <div class="text-center md:text-right">
                 <h1 class="text-lg md:text-2xl font-black text-slate-800 uppercase italic tracking-tight">Sync-App <span class="text-[#004b87]">Pro</span></h1>
@@ -384,40 +384,31 @@
         }
 
         async function exportAsImage() {
-            const resultsDiv = document.getElementById('results');
-            const hasResults = !resultsDiv.classList.contains('hidden');
-
             showToast("🔄 Afbeelding voorbereiden...");
 
             const activePanel = document.querySelector('.tab-panel:not(.hidden)');
-            const allInputs = activePanel.querySelectorAll('input, select');
+            const resultsArea = document.getElementById('results');
 
-            allInputs.forEach(input => {
+            // Vul print-text spans met huidige waardes
+            activePanel.querySelectorAll('input, select').forEach(input => {
                 const wrapper = input.closest('td') || input.closest('.input-wrap');
                 if (wrapper) {
                     const printSpan = wrapper.querySelector('.print-text');
                     if (printSpan) {
-                        if (input.tagName === 'SELECT') {
-                            printSpan.innerText = input.options[input.selectedIndex].text;
-                        } else {
-                            printSpan.innerText = input.value || '-';
-                        }
+                        printSpan.innerText = input.tagName === 'SELECT'
+                            ? input.options[input.selectedIndex].text
+                            : (input.value || '-');
                     }
                 }
             });
 
             activePanel.classList.add('printing-mode');
-            const resultsArea = document.getElementById('results');
             resultsArea.classList.add('printing-mode');
 
-            // Bepaal wat we vastleggen: als resultaten zichtbaar zijn, leg alles vast; anders alleen het invoerpaneel
-            const captureTarget = hasResults
-                ? document.getElementById('module-container')
-                : activePanel.querySelector('.sap-card') || activePanel;
+            await new Promise(resolve => setTimeout(resolve, 200));
 
             try {
-                // Kleine vertraging zodat de browser de DOM-wijzigingen kan renderen
-                await new Promise(resolve => setTimeout(resolve, 150));
+                const captureTarget = document.getElementById('module-container');
 
                 const canvas = await html2canvas(captureTarget, {
                     scale: 2,
@@ -425,40 +416,45 @@
                     allowTaint: true,
                     backgroundColor: '#f5f7f9',
                     logging: false,
-                    windowWidth: document.documentElement.scrollWidth,
-                    windowHeight: document.documentElement.scrollHeight,
-                    ignoreElements: (el) => {
-                        return el.classList.contains('no-print') || el.classList.contains('doseer-hulp');
-                    }
+                    ignoreElements: (el) => el.classList.contains('no-print') || el.classList.contains('doseer-hulp')
                 });
 
-                // Zet canvas om naar blob voor betrouwbaardere download
-                canvas.toBlob(function(blob) {
-                    if (!blob) {
-                        showToast("❌ Kon afbeelding niet aanmaken");
-                        return;
-                    }
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.download = 'SyncPlan_Hanzeplein.png';
-                    link.href = url;
-                    link.style.display = 'none';
-                    document.body.appendChild(link);
-                    link.click();
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    }, 100);
+                // Probeer eerst toBlob, val terug op toDataURL
+                try {
+                    canvas.toBlob(function(blob) {
+                        if (blob) {
+                            const url = URL.createObjectURL(blob);
+                            triggerDownload(url, 'SyncPlan_Hanzeplein.png');
+                            setTimeout(() => URL.revokeObjectURL(url), 1000);
+                        } else {
+                            // Blob is null (tainted canvas) — gebruik toDataURL als fallback
+                            triggerDownload(canvas.toDataURL('image/png'), 'SyncPlan_Hanzeplein.png');
+                        }
+                        showToast("✅ Afbeelding gedownload!");
+                    }, 'image/png');
+                } catch(e) {
+                    // toBlob threw — gebruik toDataURL direct
+                    triggerDownload(canvas.toDataURL('image/png'), 'SyncPlan_Hanzeplein.png');
                     showToast("✅ Afbeelding gedownload!");
-                }, 'image/png');
+                }
 
             } catch (err) {
                 console.error('Export fout:', err);
-                showToast("❌ Fout bij download: " + err.message);
+                showToast("❌ Fout: " + err.message);
             } finally {
                 activePanel.classList.remove('printing-mode');
                 resultsArea.classList.remove('printing-mode');
             }
+        }
+
+        function triggerDownload(href, filename) {
+            const link = document.createElement('a');
+            link.href = href;
+            link.download = filename;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function updateFullSyncTableHeaders() {
